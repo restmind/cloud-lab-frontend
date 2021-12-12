@@ -3,7 +3,7 @@ import Text from "./Text/Text";
 import Title from "./Title/Title";
 import ViewMore from "./ViewMore/ViewMore";
 import { StyledContent, StyledTitles } from './Content.styled'
-import { getAllItems } from "../../utils/Api";
+import { getAll } from "../../utils/Api";
 
 
 function Content() {
@@ -13,7 +13,7 @@ function Content() {
 
     useEffect(() => {
       if (items.length == 0) {
-        getAllItems().then((res) => {
+        getAll().then((res) => {
           if (res !== undefined) {
             setItems(res.data);
           }
@@ -24,7 +24,7 @@ function Content() {
     const [localData, SetData] = useState([]);
     useEffect(() => {
       if (localData.length == 0) {
-        getAllItems().then((res) => {
+        getAll().then((res) => {
           if (res !== undefined) {
             SetData(res);
           }
