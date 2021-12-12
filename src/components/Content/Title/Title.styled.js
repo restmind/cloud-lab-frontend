@@ -4,7 +4,7 @@ export const StyledTitle = styled.div`
     width: 80vw;
     height: 200px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-around;
     align-items: center;
     -webkit-box-shadow: 1px 1px 16px -4px rgba(0,0,0,0.25);
@@ -20,7 +20,9 @@ export const StyledTitle = styled.div`
 
 export const TitleDescription = styled.div`
     display: flex;
-    flex-direction: column;
+    width: 60%;
+    justify-content: space-between;
+    flex-direction: row;
     align-items: center;
     color: rgb(34, 34, 34);
     h1{
@@ -28,5 +30,5 @@ export const TitleDescription = styled.div`
     }
 `; 
 export const TitleText = styled.p`
-    width: 90%;
+    width: 20%;
 `; 
