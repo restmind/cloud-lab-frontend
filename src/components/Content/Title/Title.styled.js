@@ -20,15 +20,14 @@ export const StyledTitle = styled.div`
 
 export const TitleDescription = styled.div`
     display: flex;
-    width: 60%;
-    justify-content: space-between;
+    width: 45vw;
     flex-direction: row;
-    align-items: center;
+    justify-content: space-between;
     color: rgb(34, 34, 34);
     h1{
         font-size: 20px;
     }
 `; 
 export const TitleText = styled.p`
-    width: 20%;
+    width: 90%;
 `; 

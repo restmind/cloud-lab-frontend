@@ -1,21 +1,15 @@
 import React, {useState, useEffect} from "react";
 import Text from "./Text/Text";
 import Title from "./Title/Title";
+import SensorTitle from "./Title/SensorTitle";
 import ViewMore from "./ViewMore/ViewMore";
-import { StyledContent, StyledTitles, AddWrapper, FormWrapper, StyledButton } from './Content.styled'
-import { getAll, postItem } from "../../utils/Api";
+import { StyledContent, StyledTitles } from './Content.styled'
+import { getAll, getAllSensorsData } from "../../utils/Api";
 
 
 function Content() {
     let emptyArray = [];
     const [items, setItems] = useState(emptyArray);
-    const [addItemState, setAddItemState] = useState("Add new Item");
-    const [name, setName] = useState("");
-    const [guarantee, setGuarantee] = useState("");
-    const [date_of_sale, setDate_of_sale] = useState("");
-    const [sales_location, setSales_location] = useState("");
-  
-
     useEffect(() => {
       if (items.length == 0) {
         getAll().then((res) => {
@@ -37,21 +31,30 @@ function Content() {
       }
     });
 
-    const refetchAll = async () => {
-      getAll().then((res) => {
-        if (res !== undefined) {
-          setItems(res.data);
-        }
-      });
-    };
-  
-    async function submitData() {
-      setAddItemState("Add new Item");
-      postItem({ name, guarantee, date_of_sale, sales_location }).then((response) =>
-      refetchAll()
-      );
-    }
 
+
+    let emptyArray2 = [];
+    const [sensors_data, setSensors] = useState(emptyArray2);
+    useEffect(() => {
+      if (sensors_data.length == 0) {
+        getAllSensorsData().then((res) => {
+          if (res !== undefined) {
+            setSensors(res.data);
+          }
+        });
+      }
+    });
+
+    const [localData2, SetData2] = useState([]);
+    useEffect(() => {
+      if (localData2.length == 0) {
+        getAllSensorsData().then((res) => {
+          if (res !== undefined) {
+            SetData2(res);
+          }
+        });
+      }
+    });
     return(
         <StyledContent>
             <Text />
@@ -60,58 +63,12 @@ function Content() {
                     <Title name={title.name} guarantee={title.guarantee} date_of_sale ={title.date_of_sale} sales_location ={title.sales_location}/>
                 ))}
             </StyledTitles>
+            <StyledTitles>
+                {sensors_data.map(sensor => (
+                    <SensorTitle sensor_name={sensor.sensor_name} sensor_type={sensor.sensor_type} time_stamp ={sensor.time_stamp} sensor_data ={sensor.sensor_data}/>
+                ))}
+            </StyledTitles>
             <ViewMore />
-            <AddWrapper>
-            {addItemState === "Add new Item" ? (
-              <button
-                onClick={() => {
-                  setAddItemState("Adding a item");
-                }}
-              >
-                Add new Item
-              </button>
-            ) : (
-              <FormWrapper>
-                <form onSubmit={submitData}>
-                  <label>Item name</label>
-
-                  <input
-                    onChange={(e) => setName(e.target.value)}
-                    name='name'
-                    type='text'
-                    placeholder='name'
-                  />
-                  <label>Item guarantee</label>
-
-                  <input
-                    onChange={(e) => setGuarantee(e.target.value)}
-                    name='guarantee'
-                    type='text'
-                    placeholder='guarantee'
-                  />
-
-                  <label>Item date of sale</label>
-
-                  <input
-                    onChange={(e) => setDate_of_sale(e.target.value)}
-                    name='date_of_sale'
-                    type='text'
-                    placeholder='date of sale'
-                  />
-
-                  <label>Item sales location</label>
-
-                  <input
-                    onChange={(e) => setSales_location(e.target.value)}
-                    name='sales_location'
-                    type='text'
-                    placeholder='sales location'
-                  />
-                  <StyledButton type='submit'>Submit</StyledButton>
-                </form>
-              </FormWrapper>
-            )}
-          </AddWrapper>
         </ StyledContent>
     );
 }
