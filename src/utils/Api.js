@@ -1,8 +1,10 @@
 import axios from "axios";
 
 const baseURL =
-  "https://yiwnc2nsvd.execute-api.us-east-2.amazonaws.com/dev/item";
+  " https://hjz6vchefj.execute-api.us-east-2.amazonaws.com/dev/item";
   
+const sensorDataURL =
+  "https://hjz6vchefj.execute-api.us-east-2.amazonaws.com/dev/sensordata";
 
 export const getAll = async () => {
   try {
@@ -14,14 +16,13 @@ export const getAll = async () => {
   }
 };
 
-
-export const postItem = async (body) => {
-  // const json = JSON.stringify(body);
+export const getAllSensorsData = async () => {
   try {
-    let responseData = await axios.post(baseURL, body);
+    let responseData = await axios.get(sensorDataURL);
     console.log(responseData);
     return responseData.data;
   } catch {
     console.log("error, cant fetch data");
   }
 };
+
